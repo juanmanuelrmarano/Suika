@@ -68,12 +68,12 @@
    WARNING: This is a development server. Do not use it in a production deployment.
    Use a production WSGI server instead.
  * Debug mode: off
- * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+ * Running on https://suikaapi.herokuapp.com/// (Press CTRL+C to quit)
   ```
 
   Ejemplo de un llamado al API con respuesta correcta en la consola:
   127.0.0.1 - - [01/Dec/2020 23:17:56] GET /contenidos?pageNum=0 HTTP/1.10 200 -
-  siendo el url del endpoint 'http://127.0.0.1:5000/contenidos?pageNum=0'
+  siendo el url del endpoint 'https://suikaapi.herokuapp.com///contenidos?pageNum=0'
 
 ## Ejecucion del Scraping
 

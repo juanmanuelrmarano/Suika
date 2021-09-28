@@ -17,7 +17,7 @@ def get_item(dictionary, key):
     return dictionary.get(key)
 
 def index(request, page=0):
-    data = requests.get('http://127.0.0.1:5000/contenidos?pageNum={}'.format(page))
+    data = requests.get('https://suikaapi.herokuapp.com/contenidos?pageNum={}'.format(page))
     data = data.json()
 
     print(data)
@@ -76,7 +76,7 @@ def ingreso(request, regExitoso = None, diffPass = None, loginState = None, publ
         regData = {
             'publicHash': publicHash
         }
-        data = requests.put('http://127.0.0.1:5000/verification', json=regData)
+        data = requests.put('https://suikaapi.herokuapp.com/verification', json=regData)
 
     ctx = {
         'regExitoso' : regExitoso,
@@ -112,7 +112,7 @@ def registro(request):
             'hashSHA256': hashSecure,
             'publicHash': publicHash
         }
-        data = requests.put('http://127.0.0.1:5000/userReg', json=regData)
+        data = requests.put('https://suikaapi.herokuapp.com/userReg', json=regData)
 
         if data.json()['success'] == False:
             regExitoso = "False"
@@ -156,7 +156,7 @@ def login(request):
             'hashSHA256': hashSecure,
             'publicHash': publicHash
         }
-        data = requests.post('http://127.0.0.1:5000/login', json=loginData)
+        data = requests.post('https://suikaapi.herokuapp.com/login', json=loginData)
 
         loginState = data.json()['loginState']
 
