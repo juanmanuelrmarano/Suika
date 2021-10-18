@@ -65,6 +65,25 @@ def index(request, page=0):
 
     return HttpResponse(doc)
 
+def product(request, idproduct):
+    doc = loader.get_template("product.html")
+
+    data = requests.get('http://127.0.0.1:5000/product?Id={}'.format(idproduct))
+    data = data.json()
+
+    ctx = {
+        'Id': data['results'][0]['Id'],
+        'Title': data['results'][0]['Title'],
+        'Link'  : data['results'][0]['Link'], 
+        'Image': data['results'][0]['Image'],
+        'Price': data['results'][0]['Price'],
+        'loggedin': request.COOKIES.get('loggedIn')
+    }
+
+    doc = doc.render(ctx)
+
+    return HttpResponse(doc)
+
 def ingreso(request, regExitoso = None, diffPass = None, loginState = None, publicHash = None):
     doc = loader.get_template("loginreg.html")
 
@@ -170,3 +189,4 @@ def login(request):
             response.set_cookie('loggedIn',None)
 
     return response        
+

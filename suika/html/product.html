@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Suika</title>
+	<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+	
+	{% load static %}
+    <link rel="stylesheet" href="{% static 'fontawesome/css/all.min.css' %}"> <!-- https://fontawesome.com/ -->
+    <!-- https://fonts.google.com/ -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+	<link rel="stylesheet" href="{% static 'css/estilos.css' %}">
+	<script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+</head>
+
+<body>
+	<div class="tm-page-wrap mx-auto">
+		<div class="position-relative">
+			<div class="potition-absolute tm-site-header">
+				<div class="container-fluid position-relative">
+					<div class="row">						
+                        <div class="col-7 col-md-4">
+                            <a href="/index/0" class="tm-bg-black text-center tm-logo-container">
+                                <i class="fas fa-video tm-site-logo mb-3"></i>
+                                <h1 class="tm-site-name">Suika</h1>
+                            </a>
+                        </div>
+                        <div class="col-5 col-md-8 ml-auto mr-0">
+                            <div class="tm-site-nav">
+                                <nav class="navbar navbar-expand-lg mr-0 ml-auto" id="tm-main-nav">
+                                    <button class="navbar-toggler tm-bg-black py-2 px-3 mr-0 ml-auto collapsed" type="button"
+                                        data-toggle="collapse" data-target="#navbar-nav" aria-controls="navbar-nav"
+                                        aria-expanded="false" aria-label="Toggle navigation">
+                                        <span>
+                                            <i class="fas fa-bars tm-menu-closed-icon"></i>
+                                            <i class="fas fa-times tm-menu-opened-icon"></i>
+                                        </span>
+                                    </button>
+                                    <div class="collapse navbar-collapse tm-nav" id="navbar-nav">
+                                        <ul class="navbar-nav text-uppercase">
+                                            <form action="/buscar/" method="GET" class="tm-subscribe-form">
+                                                <input type="text" name="queryString" placeholder="Escribe un titulo..." style="height: 60px; width: 500px;">
+                                                <button type="submit" href class="btn rounded-0 btn-primary tm-btn-small" style="height: 59px; width: 100px; text-align: left;" >Buscar</button>
+                                            </form>
+                                            {%if loggedin == "None"%}
+                                                <li class="nav-item">
+                                                    <a class="nav-link tm-nav-link" href="/logreg">Iniciar Sesion</a>
+                                                </li>
+                                            {%else%}
+                                                <li class="nav-item">
+                                                    <a class="nav-link tm-nav-link" href="/mylist">Mi Lista</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link tm-nav-link" href="/logout">LogOut</a>
+                                                </li>
+                                            {%endif%}
+                                        </ul>
+                                    </div>
+                                </nav>
+                            </div>
+                        </div>
+					</div>
+				</div>
+			</div>
+			<div class="tm-welcome-container tm-fixed-header tm-fixed-header-1">
+				<!-- <div class="text-center">
+					<p class="pt-5 px-3 tm-welcome-text tm-welcome-text-2 mb-1 text-white mx-auto">Poner nombre y foto del contenido que aparecio, o anuncio de anime del momento</p>                	
+				</div>                 -->
+            </div>
+
+			<!-- Header image -->
+            <div id="tm-fixed-header-bg"></div> 
+		</div>
+
+		<!-- Page content -->
+		<div class="container-fluid">
+			<div class="mx-auto tm-content-container">
+				<main>
+					<h2 class="mb-5 tm-video-title">{{Title}}</h2>
+					<div class="container">
+						<div class="row">
+							<!-- <div class="col">
+								{%if Episodes.prev != None%}
+									<a href = "/contenido/id={{Episodes.current.ParentId}}/idEpi={{Episodes.prev.Id}}">
+										<h3 class="tm-text-primary mb-4">Anterior</h3>
+									</a>
+								{%endif%}
+							</div>
+							<div class="col">
+								{%if Episodes.next != None%}
+									<a href = "/contenido/id={{Episodes.current.ParentId}}/idEpi={{Episodes.next.Id}}">
+										<h3 class="tm-text-primary mb-4" style="text-align: right;">Siguiente</h3>
+									</a>
+								{%endif%}
+							</div>	 -->
+						</div>
+					</div>				
+					<div style="margin-bottom: 0%;" class="row mb-5 pb-4">
+						{%if loggedin == "None"%}
+							<div class="col-12">
+								<h1 class="tm-text-primary mb-3" style="text-align: center;">No podes ver este contenido :\</h1>
+								<h2 class="tm-text-primary mb-3" style="text-align: center;">Crea una cuenta gratis o logueate para disfrutar del mejor anime!</h2>
+								<a class="nav-link tm-nav-link" style="text-align: center; color: #007bff;" href="/logreg">Iniciar Sesion o Registrarse</a>
+							</div>
+						{%else%}
+							<div class="col-12">
+								<!-- Video player 1422x800 -->
+								<video width="1422" height="800" controls>
+								<source src="{% static 'video/myheroacademia.mp4' %}" type="video/mp4">							  
+								Your browser does not support the video tag.
+								</video>
+							</div>
+						{%endif%}
+					</div>
+					<div class="row mb-5 pb-5">
+						<div class="col-xl-8 col-lg-7">
+							<!-- Video description -->
+							<div class="tm-video-description-box">
+								<h2 class="mb-5 tm-video-title">{{Title}}</h2>
+								<p class="tm-text-primary mb-4">Price: </p>
+								<p class="mb-4">{{Price}}</p>
+
+								<!-- <p class="tm-text-primary mb-4">Directores:</p>
+								<p class="mb-4">Hideo Kojima</p>
+
+								<p class="tm-text-primary mb-4">Cast:</p>
+								<p class="mb-4">Hideo Kojima</p>
+
+								<p class="tm-text-primary mb-4">Crew:</p>
+								<p class="mb-4">Hideo Kojima</p> -->
+								
+								<p class="tm-text-primary mb-4">Reparto: </p>
+
+								<!-- <div class="row mt-5 pt-3"> -->
+								<!-- {%for item in Cast%}
+									<div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
+										<div class="p-5 tm-bg-gray"> 
+											<p class="tm-text-primary mb-4">{{item.character}}:</p>
+											<p class="mb-4">{{item.name}}</p>
+											<img src="{{item.profile_path}}" alt="Image">   
+										</div>                        
+									</div>
+								{%endfor%} -->
+								<!-- </div> -->
+							</div>							
+						</div>
+					</div>
+				</main>
+
+                <div class="row mt-5 pt-3">
+                    <div class="col-xl-6 col-lg-12 mb-4">
+                        <div class="tm-bg-gray p-5 h-100">
+                            <h3 class="tm-text-primary mb-3">¿Querés recibir noticias sobre los últimos estrenos?</h3>
+                            <p class="mb-5">Suscribite para estar al día con todo lo nuevo!</p>
+                            <form action="" method="GET" class="tm-subscribe-form">
+                                <input type="text" name="email" placeholder="E-mail..." required>
+                                <button type="submit" class="btn rounded-0 btn-primary tm-btn-small">Suscribirme</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
+                        <div class="p-5 tm-bg-gray">
+                            <h3 class="tm-text-primary mb-4">Lo último</h3>
+                            <ul class="list-unstyled tm-footer-links">
+                                <li><a href="/contenido/id=272617">Boku No Hero Academia</a></li>
+                                <li><a href="/contenido/id=277768">Kimetsu no Yaiba</a></li>
+                                <li><a href="/contenido/id=271889">A Certain Scientific Railgun</a></li>
+                                <li><a href="/contenido/id=260407">JoJo's Bizarre Adventure</a></li>
+                            </ul>    
+                        </div>                        
+                    </div>
+                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12 mb-4">
+                        <div class="p-5 tm-bg-gray h-100">
+                            <h3 class="tm-text-primary mb-4">Encontranos en</h3>
+                            <ul class="list-unstyled tm-footer-links">
+                                <li><a href="#">Facebook</a></li>
+                                <li><a href="#">Twitter</a></li>
+                                <li><a href="#">Instagram</a></li>
+                                <li><a href="#">Contacto</a></li>
+                                <li><a href="#">Privacidad</a></li>
+                            </ul>
+                        </div>                        
+                    </div>
+                </div> <!-- row -->
+
+                <footer class="row pt-5">
+                    <div class="col-12">
+                        <p class="text-right">Copyright 2020</p>
+                    </div>
+                </footer>
+			</div> <!-- .tm-content-container -->
+		</div>
+	</div>
+
+    <script>
+    	$(document).ready(function() {
+    		$('.tm-likes-box').click(function(e) {
+    			e.preventDefault();
+    			$(this).toggleClass('tm-liked');
+
+    			if($(this).hasClass('tm-liked')) {
+    				$('#tm-likes-count').html('486 likes');
+    			} else {
+    				$('#tm-likes-count').html('485 likes');
+    			}
+    		});
+    	});
+    </script>
+</body>
+</html>
