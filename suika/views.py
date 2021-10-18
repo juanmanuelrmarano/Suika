@@ -19,7 +19,6 @@ def get_item(dictionary, key):
 def index(request, page=0):
     searchTerm = request.GET.get('search')
     if searchTerm:
-        print('hola')
         data = requests.get('https://suikaapi.herokuapp.com/search?search={}'.format(request.GET.get('search')))
     else:
         data = requests.get('https://suikaapi.herokuapp.com/contenidos?pageNum={}'.format(page))
@@ -75,6 +74,7 @@ def product(request, idproduct):
     doc = loader.get_template("product.html")
 
     data = requests.get('http://127.0.0.1:5000/product?Id={}'.format(idproduct))
+    # data = requests.get('https://suikaapi.herokuapp.com/product?Id={}'.format(page))    
     data = data.json()
 
     ctx = {
@@ -84,6 +84,7 @@ def product(request, idproduct):
         'Link'  : data['results'][0]['Link'], 
         'Image': data['results'][0]['Image'],
         'Price': data['results'][0]['Price'],
+        'History': requests.get('http://127.0.0.1:5000/history?Id={}'.format(idproduct)).json(),
         'loggedin': request.COOKIES.get('loggedIn')
     }
 
@@ -91,8 +92,24 @@ def product(request, idproduct):
 
     return HttpResponse(doc)
 
-def history():
-    pass
+# def history(request, idproduct):
+#     doc = loader.get_template("product.html")
+
+#     data = requests.get('http://127.0.0.1:5000/history?Id={}'.format(idproduct))
+#     data = data.json()
+
+#     ctx = {
+#         'PageId': data['results'][0]['PageId'],
+#         'Id': data['results'][0]['Id'],
+#         'Price': data['results'][0]['Price'],
+#         'Date': data['results'][0]['Date'],
+#         'loggedin': request.COOKIES.get('loggedIn')
+#     }
+
+#     doc = doc.render(ctx)
+
+#     return HttpResponse(doc)
+
 
 def ingreso(request, regExitoso = None, diffPass = None, loginState = None, publicHash = None):
     doc = loader.get_template("loginreg.html")
