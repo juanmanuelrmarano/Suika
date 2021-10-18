@@ -25,7 +25,10 @@ from suika.views import logout
 
 urlpatterns = [
     path('',index),
+    path('index/',index),
     path('index/<int:page>',index),
+
+    path('index/?search=<str:searchTerm>',index),
 
     path('product/id=<str:idproduct>/',product),
 

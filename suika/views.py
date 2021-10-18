@@ -17,12 +17,18 @@ def get_item(dictionary, key):
     return dictionary.get(key)
 
 def index(request, page=0):
-    data = requests.get('https://suikaapi.herokuapp.com/contenidos?pageNum={}'.format(page))
+    searchTerm = request.GET.get('search')
+    if searchTerm:
+        print('hola')
+        data = requests.get('https://suikaapi.herokuapp.com/search?search={}'.format(request.GET.get('search')))
+    else:
+        data = requests.get('https://suikaapi.herokuapp.com/contenidos?pageNum={}'.format(page))
+
     data = data.json()
+    
+    #print(data)
 
-    print(data)
-
-    print(request.COOKIES.get('publicHash'), request.COOKIES.get('loggedIn'))
+    #print(request.COOKIES.get('publicHash'), request.COOKIES.get('loggedIn'))
 
     pageCant = data['total']//9
 
@@ -45,7 +51,7 @@ def index(request, page=0):
         if pageDelimiter == 6:
             break
         pageNumbers.append(i)
-        print(i)
+        #print(i)
 
     doc = loader.get_template("index.html")
 
@@ -59,7 +65,7 @@ def index(request, page=0):
         'loggedin': request.COOKIES.get('loggedIn')
     }
 
-    print(ctx)
+    #print(ctx)
 
     doc = doc.render(ctx) 
 
