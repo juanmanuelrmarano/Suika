@@ -72,6 +72,7 @@ def product(request, idproduct):
     data = data.json()
 
     ctx = {
+        'PageId': data['results'][0]['PageId'],
         'Id': data['results'][0]['Id'],
         'Title': data['results'][0]['Title'],
         'Link'  : data['results'][0]['Link'], 
@@ -83,6 +84,9 @@ def product(request, idproduct):
     doc = doc.render(ctx)
 
     return HttpResponse(doc)
+
+def history():
+    pass
 
 def ingreso(request, regExitoso = None, diffPass = None, loginState = None, publicHash = None):
     doc = loader.get_template("loginreg.html")

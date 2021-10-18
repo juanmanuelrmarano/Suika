@@ -431,6 +431,10 @@ video {
     font-style: italic;
 }
 
+.gap100 {
+    padding: 70px 0px;
+}
+
 @media (min-width: 992px) {
     #tm-main-nav .nav-item { margin: 20px 40px; }
     .navbar-expand-lg .navbar-nav .nav-link { padding: 8px 0px; }

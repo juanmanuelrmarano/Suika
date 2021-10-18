@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path
 from suika.views import index
 from suika.views import product
+from suika.views import history
 from suika.views import ingreso
 from suika.views import registro
 from suika.views import login
@@ -27,6 +28,8 @@ urlpatterns = [
     path('index/<int:page>',index),
 
     path('product/id=<str:idproduct>/',product),
+
+    path('history/id=<str:idhistory>/',history),
 
     path('logreg/',ingreso),
     path('logreg/regExitoso=<str:regExitoso>/diffPass=<str:diffPass>',ingreso),
