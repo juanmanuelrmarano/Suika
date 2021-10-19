@@ -70,29 +70,9 @@ def addlist(request, idcontenido):
         'publicHash': publicHash,
         'idcontenido': idcontenido
     }
-    data = requests.put('http://127.0.0.1:5000/addlist', json=loginData)
+    data = requests.put('https://suikaapi.herokuapp.com/addlist', json=loginData)
 
     return redirect(f'/index/0')
-
-def mylist(request):
-    publicHash = request.COOKIES.get('publicHash')
-
-    loginData = {
-        'publicHash': publicHash
-    }
-    data = requests.post('http://127.0.0.1:5000/mylist', json=loginData)
-    data = data.json()
-
-    doc = loader.get_template("mylist.html")
-
-    ctx = {
-        'publicHash': publicHash,
-        'data' : data
-    }
-
-    doc = doc.render(ctx)
-
-    return HttpResponse(doc)
 
 def product(request, idproduct):
     doc = loader.get_template("product.html")
