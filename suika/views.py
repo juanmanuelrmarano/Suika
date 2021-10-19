@@ -66,7 +66,7 @@ def product(request, idproduct):
     doc = loader.get_template("product.html")
 
     # data = requests.get('http://127.0.0.1:5000/product?Id={}'.format(idproduct))
-    data = requests.get('https://suikaapi.herokuapp.com/product?Id={}'.format(page))    
+    data = requests.get('https://suikaapi.herokuapp.com/product?Id={}'.format(idproduct))    
     data = data.json()
 
     ctx = {

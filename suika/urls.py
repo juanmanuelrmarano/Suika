@@ -32,7 +32,7 @@ urlpatterns = [
 
     path('product/id=<str:idproduct>/',product),
 
-    # path('history/id=<str:idhistory>/',history),
+    # path('history/id=<str:idhistory>',history),
 
     path('logreg/',ingreso),
     path('logreg/regExitoso=<str:regExitoso>/diffPass=<str:diffPass>',ingreso),
