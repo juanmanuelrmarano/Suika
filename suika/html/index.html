@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet">
     
 	{% load static %}
+    <link rel="shortcut icon" href="{% static 'img/logo.png' %}"/>
     <link rel="stylesheet" href="{% static 'fontawesome/css/all.min.css' %}"> <!-- https://fontawesome.com/ -->
     <!-- https://fonts.google.com/ -->
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
@@ -88,21 +89,17 @@
                     </div>
 
                     <!-- Catalog Paging Buttons -->
-                    <div>
-                        <ul class="nav tm-paging-links">
-                            <li class="nav-item"><a href="/index/{{previousPage}}#indice" class="nav-link tm-paging-link">Last</a></li>
-                            {%for value in pageNumbers%}
-                                {%if value == page%}
-                                    <li class="nav-item active"><a href="/index/{{value}}#indice" class="nav-link tm-paging-link">{{value|add:1}}</a></li>
-                                {%else%}
-                                    <li class="nav-item"><a href="/index/{{value}}#indice" class="nav-link tm-paging-link">{{value|add:1}}</a></li>
-                                {%endif%}
-                            {%endfor%}
-                            <li class="nav-item"><a href="#content" class="nav-link tm-paging-link">...</a></li>
-                            <li class="nav-item"><a href="/index/{{nextPage}}#indice" class="nav-link tm-paging-link">Next</a></li>
-                            <li class="nav-item"><a href="/index/{{pageCant}}#indice" class="nav-link tm-paging-link">{{pageCant}}</a></li>
-                        </ul>
-                    </div>
+                    {%if search == False%}
+                        <div>
+                            <ul class="nav tm-paging-links">
+                                <li class="nav-item"><a href="/index/0#indice" class="nav-link tm-paging-link">0</a></li>
+                                <li class="nav-item"><a href="/index/{{previousPage}}#indice" class="nav-link tm-paging-link"><-</a></li>
+                                <li class="nav-item active"><a href="/index/{{page}}#indice" class="nav-link tm-paging-link">{{page}}</a></li>
+                                <li class="nav-item"><a href="/index/{{nextPage}}#indice" class="nav-link tm-paging-link">-></a></li>
+                                <li class="nav-item"><a href="/index/{{pageCant}}#indice" class="nav-link tm-paging-link">{{pageCant}}</a></li>
+                            </ul>
+                        </div>
+                    {%endif%}
                     
                     <div class="row tm-catalog-item-list">
                         {%for item in data.results%}
@@ -125,21 +122,17 @@
 
                     <!-- Catalog Paging Buttons -->
                     <!-- Catalog Paging Buttons -->
-                    <div>
-                        <ul class="nav tm-paging-links">
-                            <li class="nav-item"><a href="/index/{{previousPage}}#indice" class="nav-link tm-paging-link">Last</a></li>
-                            {%for value in pageNumbers%}
-                                {%if value == page%}
-                                    <li class="nav-item active"><a href="/index/{{value}}#indice" class="nav-link tm-paging-link">{{value|add:1}}</a></li>
-                                {%else%}
-                                    <li class="nav-item"><a href="/index/{{value}}#indice" class="nav-link tm-paging-link">{{value|add:1}}</a></li>
-                                {%endif%}
-                            {%endfor%}
-                            <li class="nav-item"><a href="#content" class="nav-link tm-paging-link">...</a></li>
-                            <li class="nav-item"><a href="/index/{{nextPage}}#indice" class="nav-link tm-paging-link">Next</a></li>
-                            <li class="nav-item"><a href="/index/{{pageCant}}#indice" class="nav-link tm-paging-link">{{pageCant}}</a></li>
-                        </ul>
-                    </div>
+                    {%if search == False%}
+                        <div>
+                            <ul class="nav tm-paging-links">
+                                <li class="nav-item"><a href="/index/0#indice" class="nav-link tm-paging-link">0</a></li>
+                                <li class="nav-item"><a href="/index/{{previousPage}}#indice" class="nav-link tm-paging-link"><-</a></li>
+                                <li class="nav-item active"><a href="/index/{{page}}#indice" class="nav-link tm-paging-link">{{page}}</a></li>
+                                <li class="nav-item"><a href="/index/{{nextPage}}#indice" class="nav-link tm-paging-link">-></a></li>
+                                <li class="nav-item"><a href="/index/{{pageCant}}#indice" class="nav-link tm-paging-link">{{pageCant}}</a></li>
+                            </ul>
+                        </div>
+                    {%endif%}
                 </main>
 
                 <!-- Subscribe form and footer links -->
