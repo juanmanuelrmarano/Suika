@@ -20,8 +20,10 @@ def index(request, page=0):
     searchTerm = request.GET.get('search')
     if searchTerm:
         data = requests.get('https://suikaapi.herokuapp.com/search?search={}'.format(request.GET.get('search')))
+        search = True
     else:
         data = requests.get('https://suikaapi.herokuapp.com/contenidos?pageNum={}'.format(page))
+        search = False
 
     data = data.json()
     
@@ -30,37 +32,27 @@ def index(request, page=0):
     #print(request.COOKIES.get('publicHash'), request.COOKIES.get('loggedIn'))
 
     pageCant = data['total']//9
+    print(pageCant, data['total'])
 
-    nextPage = page + 1
-
+    if page == pageCant:
+        nextPage = 0
+    else:
+        nextPage = page + 1
+    
     if page == 0:
         previousPage = 0
-        previousPages = 0
-    elif page == 1:
-        previousPage = 0
-        previousPages = 1
     else:
         previousPage = page - 1
-        previousPages = 2
-
-    pageNumbers = []
-    pageDelimiter = 0
-    for i in range(page-previousPages,pageCant):
-        pageDelimiter += 1
-        if pageDelimiter == 6:
-            break
-        pageNumbers.append(i)
-        #print(i)
 
     doc = loader.get_template("index.html")
 
     ctx = {
-        'pageNumbers': pageNumbers,
         'pageCant': pageCant,
         'nextPage': nextPage,
         'previousPage': previousPage,
         'page' : page,
         'data' : data,
+        'search': search,
         'loggedin': request.COOKIES.get('loggedIn')
     }
 
