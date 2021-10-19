@@ -88,6 +88,8 @@ def product(request, idproduct):
         'loggedin': request.COOKIES.get('loggedIn')
     }
 
+    # print(ctx)
+
     doc = doc.render(ctx)
 
     return HttpResponse(doc)

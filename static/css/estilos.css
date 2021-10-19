@@ -134,6 +134,10 @@ h2, p { color: #666666; }
     transition: all 0.3s;
 }
 
+.gap100 {
+    padding: 70px 0px;
+}
+
 .tm-btn-animate:hover:before { top: 13px; }
 
 .tm-btn-animate span {

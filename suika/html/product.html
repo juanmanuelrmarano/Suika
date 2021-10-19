@@ -93,9 +93,8 @@ ORIGINAL:
                             <h2 class="tm-text-primary mb-3" style="text-align: center;">Crea una cuenta gratis o logueate para disfrutar del mejor anime!</h2>
                             <a class="nav-link tm-nav-link" style="text-align: center; color: #007bff;" href="/logreg">Iniciar Sesion o Registrarse</a>
                         </div>
-						{%else%}
 
-                        
+						{%else%}                        
                         <div class="row gap100 mx-auto">
 
                             <div class="col-sm-10 col-md-6 col-lg-4 ">
@@ -107,7 +106,7 @@ ORIGINAL:
                                     <h2 class="tm-video-title ">{{Title}}</h2>
                                 </div>
                                 <div class="col-12 d-flex justify-content-center row align-items-center">
-                                    <h1 class="">{{Price}}</h1>
+                                    <h1 class="">${{Price}}</h1>
                                 </div>
                                 <div class="col-12 d-flex justify-content-center row align-items-center">
                                     <!-- <a href="{{Link}}" class="thumbnail">  -->
@@ -118,54 +117,68 @@ ORIGINAL:
                             </div>
 
                         </div>
-                        
+
                         <canvas id="myChart"></canvas>
                         
 						{%endif%}
 
                         <script>
                             // chart script
-                            var ctx = document.getElementById('myChart').getContext('2d');
-                            var chartOptions = {
-                                legend: {
-                                    display: false
-                                        },
-                                scales: {
-                                    xAxes: [{
-                                        barPercentage:1
-                                        }],
-                                    yAxes: [
-                                            // {barPercentage: 1},
-                                            // {gridLines:{drawBorder: false}},
-                                            {ticks: {display:false}},
-                                            // {ticks: {mirror: true}},
-                                            {display: false},
-                                            
-                                            ],
-                                elements: {
-                                    rectangle: {
-                                    borderSkipped: 'left',
-                                    }
-                                }
-                                }
+                            
+                            var dates = [];
+                            var prices = [];
+                            // var hist = "{{History|safe}}";
+                            var hist = JSON.parse("{{History|safe}}".replace(/'/g, '"'));                        
+
+                            for(item in hist.results){
+                                prices.push(parseInt(hist.results[item].Price))
+                                dates.push(hist.results[item].Date)
                             };
+
+                            console.log(4, prices);
+                            console.log(5, dates);
+
+                            var ctx = document.getElementById('myChart').getContext('2d');
+                            // var chartOptions = {
+                            //     legend: {
+                            //         display: false
+                            //             },
+                            //     scales: {
+                            //         xAxes: [{
+                            //             barPercentage:1
+                            //             }],
+                            //         yAxes: [
+                            //                 // {barPercentage: 1},
+                            //                 // {gridLines:{drawBorder: false}},
+                            //                 {ticks: {display:false}},
+                            //                 // {ticks: {mirror: true}},
+                            //                 {display: false},
+                                            
+                            //                 ],
+                            //     elements: {
+                            //         rectangle: {
+                            //         borderSkipped: 'left',
+                            //         }
+                            //     }
+                            //     }
+                            // };
                             var chart = new Chart(ctx, {
                                 // The type of chart we want to create
                                 type: 'line',
                     
                                 // The data for our dataset
                                 data: {
-                                    labels: [100, 200 , 300, 4400, 500],
+                                    labels: dates, 
                                     datasets: [{
-                                        data: [1,2,3,4,5],
                                         label: 'Historial de Precios',
+                                        data: prices,
                                         // barThickness:'flex',
-                                        backgroundColor:'#AFF33c',  
+                                        backgroundColor:'#AFF33c'
                                         
                                     }]
                                 },
                     
-                                options: chartOptions
+                                // options: chartOptions
                             });
                         </script>
 				</main>
