@@ -66,7 +66,7 @@ def product(request, idproduct):
     doc = loader.get_template("product.html")
 
     data = requests.get('http://127.0.0.1:5000/product?Id={}'.format(idproduct))
-    # data = requests.get('https://suikaapi.herokuapp.com/product?Id={}'.format(page))    
+    data = requests.get('https://suikaapi.herokuapp.com/product?Id={}'.format(page))    
     data = data.json()
 
     ctx = {
@@ -76,7 +76,8 @@ def product(request, idproduct):
         'Link'  : data['results'][0]['Link'], 
         'Image': data['results'][0]['Image'],
         'Price': data['results'][0]['Price'],
-        'History': requests.get('http://127.0.0.1:5000/history?Id={}'.format(idproduct)).json(),
+        # 'History': requests.get('http://127.0.0.1:5000/history?Id={}'.format(idproduct)).json(),
+        'History': requests.get('https://suikaapi.herokuapp.com/history?Id={}'.format(idproduct)).json(),
         'loggedin': request.COOKIES.get('loggedIn')
     }
 
