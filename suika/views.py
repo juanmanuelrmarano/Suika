@@ -18,21 +18,23 @@ def get_item(dictionary, key):
 
 def index(request, page=0):
     searchTerm = request.GET.get('search')
-    if searchTerm:
+    if request.get_full_path() == '/mylist/':
+        publicHash = request.COOKIES.get('publicHash')
+        data = requests.post('https://suikaapi.herokuapp.com/mylist', json={'publicHash': publicHash})
+        mylist = True
+        dont_show_pagination = True
+    elif searchTerm:
         data = requests.get('https://suikaapi.herokuapp.com/search?search={}'.format(request.GET.get('search')))
-        search = True
+        dont_show_pagination = True
+        mylist = False
     else:
         data = requests.get('https://suikaapi.herokuapp.com/contenidos?pageNum={}'.format(page))
-        search = False
+        dont_show_pagination = False
+        mylist = False
 
     data = data.json()
-    
-    #print(data)
-
-    #print(request.COOKIES.get('publicHash'), request.COOKIES.get('loggedIn'))
 
     pageCant = data['total']//9
-    print(pageCant, data['total'])
 
     if page == pageCant:
         nextPage = 0
@@ -52,13 +54,43 @@ def index(request, page=0):
         'previousPage': previousPage,
         'page' : page,
         'data' : data,
-        'search': search,
+        'search': dont_show_pagination,
+        'mylist': mylist,
         'loggedin': request.COOKIES.get('loggedIn')
     }
 
-    #print(ctx)
-
     doc = doc.render(ctx) 
+
+    return HttpResponse(doc)
+
+def addlist(request, idcontenido):
+    publicHash = request.COOKIES.get('publicHash')
+
+    loginData = {
+        'publicHash': publicHash,
+        'idcontenido': idcontenido
+    }
+    data = requests.put('http://127.0.0.1:5000/addlist', json=loginData)
+
+    return redirect(f'/index/0')
+
+def mylist(request):
+    publicHash = request.COOKIES.get('publicHash')
+
+    loginData = {
+        'publicHash': publicHash
+    }
+    data = requests.post('http://127.0.0.1:5000/mylist', json=loginData)
+    data = data.json()
+
+    doc = loader.get_template("mylist.html")
+
+    ctx = {
+        'publicHash': publicHash,
+        'data' : data
+    }
+
+    doc = doc.render(ctx)
 
     return HttpResponse(doc)
 
@@ -81,37 +113,12 @@ def product(request, idproduct):
         'loggedin': request.COOKIES.get('loggedIn')
     }
 
-    # print(ctx)
-
     doc = doc.render(ctx)
 
     return HttpResponse(doc)
 
-# def history(request, idproduct):
-#     doc = loader.get_template("product.html")
-
-#     data = requests.get('http://127.0.0.1:5000/history?Id={}'.format(idproduct))
-#     data = data.json()
-
-#     ctx = {
-#         'PageId': data['results'][0]['PageId'],
-#         'Id': data['results'][0]['Id'],
-#         'Price': data['results'][0]['Price'],
-#         'Date': data['results'][0]['Date'],
-#         'loggedin': request.COOKIES.get('loggedIn')
-#     }
-
-#     doc = doc.render(ctx)
-
-#     return HttpResponse(doc)
-
-
 def ingreso(request, regExitoso = None, diffPass = None, loginState = None, publicHash = None):
     doc = loader.get_template("loginreg.html")
-
-    print(request.COOKIES.get('publicHash'), request.COOKIES.get('loggedIn'))
-
-    print(regExitoso, diffPass, loginState, request.COOKIES.get('loggedIn'))
 
     if loginState == 'verification':
         regData = {
@@ -125,8 +132,6 @@ def ingreso(request, regExitoso = None, diffPass = None, loginState = None, publ
         'loginState': loginState,
         'loggedin': request.COOKIES.get('loggedIn')
     }
-
-    print(ctx)
 
     doc = doc.render(ctx)
 
@@ -174,13 +179,10 @@ def registro(request):
     return response
 
 def logout(request):
-    print(request.COOKIES.get('publicHash'), request.COOKIES.get('loggedIn'))
     
     response = redirect(f'/index/0')
     response.set_cookie('publicHash',None)
     response.set_cookie('loggedIn',None)
-
-    print(request.COOKIES.get('publicHash'), request.COOKIES.get('loggedIn'))
 
     return response
 

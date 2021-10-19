@@ -22,11 +22,13 @@ from suika.views import ingreso
 from suika.views import registro
 from suika.views import login
 from suika.views import logout
+from suika.views import addlist
 
 urlpatterns = [
     path('',index),
     path('index/',index),
     path('index/<int:page>',index),
+    path('mylist/',index),
 
     path('index/?search=<str:searchTerm>',index),
 
@@ -42,6 +44,8 @@ urlpatterns = [
     path('registro/',registro),
 
     path('login/',login),
+
+    path('addlist/id=<str:idcontenido>',addlist),
 
     path('logout/',logout),
 ]

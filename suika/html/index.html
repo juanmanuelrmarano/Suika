@@ -54,6 +54,9 @@
                                                 </li>
                                             {%else%}
                                                 <li class="nav-item">
+                                                    <a class="nav-link tm-nav-link" href="/mylist">Mi Lista</a>
+                                                </li>
+                                                <li class="nav-item">
                                                     <a class="nav-link tm-nav-link" href="/logout">LogOut</a>
                                                 </li>
                                             {%endif%}
@@ -89,7 +92,7 @@
                     </div>
 
                     <!-- Catalog Paging Buttons -->
-                    {%if search == False%}
+                    {%if dont_show_pagination == False%}
                         <div>
                             <ul class="nav tm-paging-links">
                                 <li class="nav-item"><a href="/index/0#indice" class="nav-link tm-paging-link">0</a></li>
@@ -111,7 +114,9 @@
                                     </a>
                                 </div>    
                                 <div class="p-4 tm-bg-gray tm-catalog-item-description">
-                                    <!-- <a href="/addlist/id={{item.Id}}" class="tm-catalog-item-text tm-catalog-item-title" style="color:#17a2b8;">Añadir a mi lista</a> -->
+                                    {%if mylist == False%}
+                                        <a href="/addlist/id={{item.Id}}" class="tm-catalog-item-text tm-catalog-item-title" style="color:#17a2b8;">Añadir a mi lista</a>
+                                    {%endif%}
                                     <h3 class="tm-text-primary mb-3 tm-catalog-item-title">{{item.Title}}</h3>
                                     <h4 class="tm-text-primary mb-3 tm-catalog-item-title">${{item.Price}}</h4>
                                     <p class="tm-catalog-item-text">{{item.Description}}</p>
@@ -122,7 +127,7 @@
 
                     <!-- Catalog Paging Buttons -->
                     <!-- Catalog Paging Buttons -->
-                    {%if search == False%}
+                    {%if dont_show_pagination == False%}
                         <div>
                             <ul class="nav tm-paging-links">
                                 <li class="nav-item"><a href="/index/0#indice" class="nav-link tm-paging-link">0</a></li>
