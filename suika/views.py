@@ -54,8 +54,8 @@ def index(request, page=0):
         'previousPage': previousPage,
         'page' : page,
         'data' : data,
-        'search': dont_show_pagination,
         'mylist': mylist,
+        'dont_show_pagination': dont_show_pagination,
         'loggedin': request.COOKIES.get('loggedIn')
     }
 
