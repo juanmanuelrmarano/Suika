@@ -36,19 +36,43 @@ def index(request, page=0):
 
     pageCant = data['total']//9
 
-    if page == pageCant:
-        nextPage = 0
-    else:
-        nextPage = page + 1
-    
+    nextPage = page + 1
+
     if page == 0:
         previousPage = 0
+        previousPages = 0
+    elif page == 1:
+        previousPage = 0
+        previousPages = 1
     else:
         previousPage = page - 1
+        previousPages = 2
+
+    pageNumbers = []
+    pageDelimiter = 0
+    for i in range(page-previousPages,pageCant):
+        pageDelimiter += 1
+        if pageDelimiter == 6:
+            break
+        pageNumbers.append(i)
+        print(i)
+
+    # pageCant = data['total']//9
+
+    # if page == pageCant:
+    #     nextPage = 0
+    # else:
+    #     nextPage = page + 1
+    
+    # if page == 0:
+    #     previousPage = 0
+    # else:
+    #     previousPage = page - 1
 
     doc = loader.get_template("index.html")
 
     ctx = {
+        'pageNumbers': pageNumbers,
         'pageCant': pageCant,
         'nextPage': nextPage,
         'previousPage': previousPage,
