@@ -172,7 +172,7 @@ def registro(request):
                 f"""Gracias por registrarse en Suika!
                 Por favor, activa tu cuenta siguiendo este link:
                 
-                http://127.0.0.1:8000/logreg/publicHash={publicHash}/loginState=verification""",
+                https://suikaapp.herokuapp.com/logreg/publicHash={publicHash}/loginState=verification""",
                 'support@suika.com',
                 [form['email']],
                 fail_silently=False,
