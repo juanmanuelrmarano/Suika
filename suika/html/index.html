@@ -112,24 +112,30 @@
                     {%endif%}
                     
                     <div class="row tm-catalog-item-list">
-                        {%for item in data.results%}
-                            <div class="col-lg-4 col-md-6 col-sm-12 tm-catalog-item">
-                                <div class="position-relative tm-thumbnail-container">
-                                    <img src="{{item.Image}}" alt="Image" class="img-fluid tm-catalog-item-img">    
-                                    <!-- <a href="{{item.Link}}" target="_blank" class="position-absolute tm-img-overlay"> -->
-                                    <a href="/product/id={{item.Id}}" target="_blank" class="position-absolute tm-img-overlay">
-                                    </a>
-                                </div>    
-                                <div class="p-4 tm-bg-gray tm-catalog-item-description">
-                                    {%if mylist == False%}
-                                        <a href="/addlist/id={{item.Id}}" class="tm-catalog-item-text tm-catalog-item-title" style="color:#17a2b8;">Añadir a mi lista</a>
-                                    {%endif%}
-                                    <h3 class="tm-text-primary mb-3 tm-catalog-item-title">{{item.Title}}</h3>
-                                    <h4 class="tm-text-primary mb-3 tm-catalog-item-title">${{item.Price}}</h4>
-                                    <p class="tm-catalog-item-text">{{item.Description}}</p>
-                                </div>
+                        {%if data.results == "None"%}
+                            <div class="col-12">
+                                <h1 class="tm-text-primary mb-3" style="text-align: center;">No hay resultados! :\</h1>
                             </div>
-                        {%endfor%}
+                        {%else%}
+                            {%for item in data.results%}
+                                <div class="col-lg-4 col-md-6 col-sm-12 tm-catalog-item">
+                                    <div class="position-relative tm-thumbnail-container">
+                                        <img src="{{item.Image}}" alt="Image" class="img-fluid tm-catalog-item-img">    
+                                        <!-- <a href="{{item.Link}}" target="_blank" class="position-absolute tm-img-overlay"> -->
+                                        <a href="/product/id={{item.Id}}" target="_blank" class="position-absolute tm-img-overlay">
+                                        </a>
+                                    </div>    
+                                    <div class="p-4 tm-bg-gray tm-catalog-item-description">
+                                        {%if mylist == False%}
+                                            <a href="/addlist/id={{item.Id}}" class="tm-catalog-item-text tm-catalog-item-title" style="color:#17a2b8;">Añadir a mi lista</a>
+                                        {%endif%}
+                                        <h3 class="tm-text-primary mb-3 tm-catalog-item-title">{{item.Title}}</h3>
+                                        <h4 class="tm-text-primary mb-3 tm-catalog-item-title">${{item.Price}}</h4>
+                                        <p class="tm-catalog-item-text">{{item.Description}}</p>
+                                    </div>
+                                </div>
+                            {%endfor%}
+                        {%endif%}
                     </div>
 
                     <!-- Catalog Paging Buttons -->
@@ -170,7 +176,6 @@
                         <div class="p-5 tm-bg-gray">
                             <h3 class="tm-text-primary mb-4">Lo último</h3>
                             <ul class="list-unstyled tm-footer-links">
-                                <! --- cambiar para que redireccionen a queries con esos titulos --->
                                 <li><a href="">Boku No Hero Academia</a></li>
                                 <li><a href="">Kimetsu no Yaiba</a></li>
                                 <li><a href="">Pokemon</a></li>
