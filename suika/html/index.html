@@ -113,9 +113,15 @@
                     
                     <div class="row tm-catalog-item-list">
                         {%if data.total == 0%}
-                            <div class="col-12">
-                                <h1 class="tm-text-primary mb-3" style="text-align: center;">No hay resultados! :\</h1>
-                            </div>
+                            {%if mylist == True%}
+                                <div class="col-12">
+                                    <h1 class="tm-text-primary mb-3" style="text-align: center;">No tenes nada en tu lista! :\</h1>
+                                </div>
+                            {%else%}
+                                <div class="col-12">
+                                    <h1 class="tm-text-primary mb-3" style="text-align: center;">No hay resultados! :\</h1>
+                                </div>
+                            {%endif%}
                         {%else%}
                             {%for item in data.results%}
                                 <div class="col-lg-4 col-md-6 col-sm-12 tm-catalog-item">
